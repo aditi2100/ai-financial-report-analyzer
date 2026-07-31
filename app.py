@@ -15,81 +15,43 @@ st.set_page_config(
 # ----------------------------
 # Minimal UI theme styling
 # ----------------------------
-st.markdown(
-    """
+st.markdown("""
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
-
-html, body, [class*="css"]  {
-    font-family: 'Inter', sans-serif;
-}
-
-.block-container {
-    padding-top: 1.5rem;
-    padding-bottom: 2rem;
-    max-width: 1120px;
-}
-
-h1, h2, h3 {
-    letter-spacing: -0.02em;
-    font-weight: 650 !important;
-    color: #0F172A;
-}
-
-p, label, div {
-    color: #1E293B;
-}
-
-[data-testid="stMetric"] {
-    background: #FFFFFF;
-    border: 1px solid #E2E8F0;
-    border-radius: 14px;
-    padding: 14px 16px;
-    box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
-}
-
+/* Primary button */
 .stButton > button {
     border-radius: 10px;
     border: 1px solid #0F172A;
     background: #0F172A;
-    color: #FFFFFF;
-    font-weight: 500;
-    padding: 0.5rem 0.9rem;
+    color: #FFFFFF !important;
+    font-weight: 600;
+    padding: 0.55rem 1rem;
 }
+
+/* Hover */
 .stButton > button:hover {
     background: #1E293B;
     border-color: #1E293B;
+    color: #FFFFFF !important;
 }
 
-[data-testid="stFileUploader"] {
-    border: 1px dashed #CBD5E1;
-    border-radius: 12px;
-    padding: 0.35rem;
-    background: #FFFFFF;
+/* Focus/active */
+.stButton > button:focus,
+.stButton > button:active {
+    color: #FFFFFF !important;
+    box-shadow: 0 0 0 0.2rem rgba(15, 23, 42, 0.18);
+    outline: none;
 }
 
-.stAlert {
-    border-radius: 10px;
-}
-
-hr {
-    border: none;
-    border-top: 1px solid #E2E8F0;
-    margin: 1rem 0 1.25rem 0;
-}
-
-/* subtle card wrapper */
-.section-card {
-    border: 1px solid #E2E8F0;
-    border-radius: 14px;
-    background: #FFFFFF;
-    padding: 1rem 1rem 0.75rem 1rem;
-    margin-bottom: 1rem;
+/* Disabled */
+.stButton > button:disabled {
+    background: #CBD5E1 !important;
+    border-color: #CBD5E1 !important;
+    color: #475569 !important;
+    cursor: not-allowed;
+    opacity: 1 !important;
 }
 </style>
-""",
-    unsafe_allow_html=True,
-)
+""", unsafe_allow_html=True)
 
 st.title("📊 AI Financial Report Analyzer")
 st.caption(
