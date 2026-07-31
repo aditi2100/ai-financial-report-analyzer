@@ -1,0 +1,11 @@
+.venv/
+__pycache__/
+*.pyc
+.DS_Store
+
+# Generated pipeline artifacts
+raw_data/
+processed_data/
+rejected_data/
+pipeline.db
+pipeline_log.jsonl
