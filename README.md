@@ -14,6 +14,8 @@ The sample company, values, and events are entirely fictional. The app does not 
 
 [![Open interactive GitHub Pages demo](https://img.shields.io/badge/demo-GitHub%20Pages-136b4b?style=for-the-badge)](https://aditi2100.github.io/ai-financial-report-analyzer/)
 
+The demo source and automatic deployment workflow are ready. For the first deployment, open [repository Pages settings](https://github.com/aditi2100/ai-financial-report-analyzer/settings/pages), set **Build and deployment → Source** to **GitHub Actions**, then run **Deploy sample demo to GitHub Pages** from the [Actions tab](https://github.com/aditi2100/ai-financial-report-analyzer/actions/workflows/pages.yml). GitHub will publish the demo at the badge URL above.
+
 [![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy?repo=https://github.com/aditi2100/ai-financial-report-analyzer)
 
 The Render Blueprint uses the free web-service plan. Create the service from the button above; Render builds the app and provides its public URL. Free services may spin down after inactivity.
