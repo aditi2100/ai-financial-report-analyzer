@@ -202,7 +202,7 @@
 
     async function init() {
       try {
-        const response = await fetch(new URL("../sample_data/sample_annual_report.json", location.href));
+        const response = await fetch(new URL("sample_data/sample_annual_report.json", location.href));
         if (!response.ok) throw new Error(`Sample data request failed (${response.status})`);
         const report = await response.json();
         if (!report.company || !Array.isArray(report.pages) || !report.pages.length) {

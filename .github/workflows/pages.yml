@@ -29,6 +29,10 @@ jobs:
         uses: actions/checkout@v4
       - name: Configure GitHub Pages
         uses: actions/configure-pages@v5
+      - name: Add sample data to demo
+        run: |
+          mkdir -p docs/sample_data
+          cp sample_data/sample_annual_report.json docs/sample_data/sample_annual_report.json
       - name: Upload demo
         uses: actions/upload-pages-artifact@v3
         with:
