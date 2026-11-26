@@ -65,7 +65,3 @@ streamlit run app.py
 - Add multi-document comparison and trend charts by filing period
 
 ---
-
-## Resume bullet
-
-Built a GenAI-powered financial report analyzer using Retrieval-Augmented Generation (RAG) principles to summarize filings, answer natural-language questions with citation-style evidence, and extract key financial metrics from uploaded PDF reports.
