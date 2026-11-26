@@ -2,6 +2,7 @@
 
 A Streamlit app for exploring annual reports and 10-Ks. It provides:
 
+- [Open the interactive sample demo](https://aditi2100.github.io/ai-financial-report-analyzer/)
 - An extractive executive summary
 - Pattern-based extraction of common financial metrics
 - TF-IDF search with cited passages by document and page
@@ -10,6 +11,8 @@ A Streamlit app for exploring annual reports and 10-Ks. It provides:
 The sample company, values, and events are entirely fictional. The app does not call an external AI service; answers are retrieved report passages, not generated financial advice.
 
 ## Deploy
+
+[![Open interactive GitHub Pages demo](https://img.shields.io/badge/demo-GitHub%20Pages-136b4b?style=for-the-badge)](https://aditi2100.github.io/ai-financial-report-analyzer/)
 
 [![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy?repo=https://github.com/aditi2100/ai-financial-report-analyzer)
 

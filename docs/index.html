@@ -1,0 +1,230 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f7f8f6">
+  <meta name="description" content="Explore a fictional annual report with key metrics, an executive summary, and cited report search.">
+  <title>Ledger — Financial report demo</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --ink: #16231d;
+      --muted: #68766e;
+      --green: #136b4b;
+      --green-dark: #0e533a;
+      --line: #e4e9e5;
+      --paper: #fff;
+      --canvas: #f7f8f6;
+      font-family: "Aptos", "Segoe UI", sans-serif;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: var(--canvas); color: var(--ink); }
+    .wrap { max-width: 1080px; margin: auto; padding: 28px 24px 56px; }
+    .topbar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 32px; }
+    .brand { display: flex; align-items: center; gap: 10px; font-size: 15px; font-weight: 750; letter-spacing: -.02em; }
+    .brand-mark { display: grid; width: 34px; height: 34px; place-items: center; border-radius: 10px; color: white; background: var(--green); }
+    .top-link { color: var(--muted); font-size: 13px; text-decoration: none; }
+    .top-link:hover { color: var(--green); }
+    .hero { display: grid; grid-template-columns: minmax(0, 1fr) 230px; gap: 24px; align-items: end; padding: 36px 40px; border: 1px solid var(--line); border-radius: 20px; background: linear-gradient(120deg, #fff 52%, #edf5ef); }
+    .eyebrow { color: var(--green); font-size: 11px; font-weight: 750; letter-spacing: .14em; text-transform: uppercase; }
+    h1, h2, p { margin-top: 0; }
+    h1 { margin: 12px 0 12px; font-size: clamp(36px, 6vw, 58px); line-height: 1.03; letter-spacing: -.055em; }
+    .intro { max-width: 650px; margin: 0; color: var(--muted); font-size: 16px; line-height: 1.65; }
+    .sample-tag { justify-self: end; border: 1px solid #d6e5d9; border-radius: 999px; padding: 9px 13px; background: #f5faf6; color: var(--green-dark); font-size: 12px; font-weight: 700; white-space: nowrap; }
+    .company-row { display: flex; justify-content: space-between; gap: 16px; align-items: center; margin: 28px 2px 14px; }
+    .company-row h2 { margin: 0 0 4px; font-size: 18px; letter-spacing: -.02em; }
+    .company-row p { margin: 0; color: var(--muted); font-size: 13px; }
+    .fiction-label { color: var(--muted); font-size: 12px; text-align: right; }
+    .metrics { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
+    .metric, .card { border: 1px solid var(--line); border-radius: 14px; background: var(--paper); }
+    .metric { padding: 17px 18px; }
+    .metric-label { color: var(--muted); font-size: 12px; }
+    .metric-value { margin-top: 9px; font-size: clamp(21px, 3vw, 28px); font-weight: 750; letter-spacing: -.04em; }
+    .metric-unit { color: var(--muted); font-size: 11px; font-weight: 500; letter-spacing: 0; }
+    .metric-change { margin-top: 7px; color: var(--green); font-size: 12px; font-weight: 650; }
+    .content-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 14px; }
+    .card { padding: 22px; }
+    .card h2 { margin-bottom: 7px; font-size: 17px; letter-spacing: -.025em; }
+    .subtle { margin-bottom: 17px; color: var(--muted); font-size: 12px; line-height: 1.5; }
+    .summary { color: #3c4942; font-size: 14px; line-height: 1.75; }
+    .question-form { display: flex; gap: 8px; }
+    input[type="search"] { flex: 1; min-width: 0; padding: 12px 13px; border: 1px solid #dce3dd; border-radius: 9px; outline: none; background: #fff; color: var(--ink); font: inherit; font-size: 13px; }
+    input[type="search"]:focus { border-color: var(--green); box-shadow: 0 0 0 3px #136b4b18; }
+    button { padding: 0 15px; border: 0; border-radius: 9px; background: var(--green); color: #fff; font: inherit; font-size: 13px; font-weight: 700; cursor: pointer; }
+    button:hover { background: var(--green-dark); }
+    .suggestions { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 11px; }
+    .suggestion { padding: 6px 9px; border: 1px solid var(--line); border-radius: 999px; background: #fafbf9; color: #4a5b51; font-size: 11px; cursor: pointer; }
+    .suggestion:hover { border-color: #b6d2c0; color: var(--green-dark); }
+    #answer { margin-top: 17px; }
+    .answer-note, .empty { color: var(--muted); font-size: 12px; line-height: 1.5; }
+    .result { margin-top: 10px; padding: 12px 13px; border: 1px solid var(--line); border-radius: 10px; background: #fcfdfb; }
+    .citation { margin-bottom: 7px; color: var(--green-dark); font-size: 11px; font-weight: 750; }
+    .excerpt { margin: 0; color: #3c4942; font-size: 13px; line-height: 1.6; }
+    .footer { margin-top: 20px; color: var(--muted); font-size: 11px; line-height: 1.65; text-align: center; }
+    .loading { color: var(--muted); font-size: 13px; }
+    @media (max-width: 720px) {
+      .wrap { padding: 20px 15px 40px; }
+      .hero { grid-template-columns: 1fr; padding: 27px 23px; }
+      .sample-tag { justify-self: start; }
+      .metrics { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 9px; }
+      .content-grid { grid-template-columns: 1fr; }
+      .company-row { align-items: flex-start; }
+      .fiction-label { max-width: 130px; }
+      .question-form { flex-wrap: wrap; }
+      input[type="search"] { flex-basis: 100%; }
+      button { min-height: 40px; }
+    }
+    @media (prefers-reduced-motion: no-preference) {
+      .card, .metric { animation: rise .35s ease both; }
+      @keyframes rise { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+    }
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <header class="topbar">
+      <div class="brand"><span class="brand-mark" aria-hidden="true">L</span> Ledger</div>
+      <a class="top-link" href="https://github.com/aditi2100/ai-financial-report-analyzer">View project on GitHub ↗</a>
+    </header>
+
+    <section class="hero" aria-labelledby="page-title">
+      <div>
+        <div class="eyebrow">Financial document intelligence</div>
+        <h1 id="page-title">Read the numbers.<br>Find the story.</h1>
+        <p class="intro">Explore a sample annual report, scan the key financials, and search for relevant passages with page citations.</p>
+      </div>
+      <div class="sample-tag">Interactive sample · No sign-in</div>
+    </section>
+
+    <section aria-labelledby="company-name">
+      <div class="company-row">
+        <div>
+          <h2 id="company-name">Loading sample report…</h2>
+          <p id="period"></p>
+        </div>
+        <div class="fiction-label">Fictional demo data<br>USD millions unless noted</div>
+      </div>
+      <div id="metrics" class="metrics" aria-live="polite"></div>
+    </section>
+
+    <div class="content-grid">
+      <section class="card" aria-labelledby="summary-heading">
+        <h2 id="summary-heading">Executive summary</h2>
+        <p class="subtle">A quick read of the report's main points.</p>
+        <div id="summary" class="summary"><span class="loading">Preparing the report summary…</span></div>
+      </section>
+      <section class="card" aria-labelledby="search-heading">
+        <h2 id="search-heading">Ask the report</h2>
+        <p class="subtle">Search the sample report and open cited passages from the source pages.</p>
+        <form id="search-form" class="question-form">
+          <input id="question" type="search" aria-label="Search the report" placeholder="e.g. What cybersecurity risks are described?" autocomplete="off">
+          <button type="submit">Search report</button>
+        </form>
+        <div class="suggestions" aria-label="Example questions">
+          <button class="suggestion" type="button">What drove revenue growth?</button>
+          <button class="suggestion" type="button">What are the cybersecurity risks?</button>
+          <button class="suggestion" type="button">How much cash flow was generated?</button>
+        </div>
+        <div id="answer" aria-live="polite"></div>
+      </section>
+    </div>
+
+    <footer class="footer">This demo uses fictional company data and lightweight keyword search. It is not investment advice.<br>Want to analyze your own PDFs? <a href="https://github.com/aditi2100/ai-financial-report-analyzer" style="color: var(--green)">Run the full Streamlit app from the repository</a>.</footer>
+  </main>
+  <script>
+    const format = (number) => new Intl.NumberFormat("en-US").format(number);
+
+    function findMetric(text, pattern) {
+      const match = text.match(pattern);
+      return match ? match[1] : null;
+    }
+
+    function renderMetrics(report) {
+      const text = report.pages.map((page) => page.text).join(" ");
+      const values = [
+        ["Revenue", findMetric(text, /revenue increased to \$?([\d,]+) million/i), "+13.4% year over year"],
+        ["Net income", findMetric(text, /net income rose to \$?([\d,]+) million/i), "+22.4% year over year"],
+        ["Operating income", findMetric(text, /operating income was \$?([\d,]+) million/i), "Fiscal year 2025"],
+        ["Cash from operations", findMetric(text, /cash flow from operations was \$?([\d,]+) million/i), "Fiscal year 2025"],
+      ];
+      document.querySelector("#metrics").innerHTML = values.map(([label, value, note]) => `
+        <article class="metric">
+          <div class="metric-label">${label}</div>
+          <div class="metric-value">${value ? `$${value}` : "—"} <span class="metric-unit">million</span></div>
+          <div class="metric-change">${note}</div>
+        </article>`).join("");
+    }
+
+    function renderSearch(report) {
+      const form = document.querySelector("#search-form");
+      const field = document.querySelector("#question");
+      const answer = document.querySelector("#answer");
+      document.querySelectorAll(".suggestion").forEach((button) => {
+        button.addEventListener("click", () => {
+          field.value = button.textContent;
+          form.requestSubmit();
+        });
+      });
+
+      form.addEventListener("submit", (event) => {
+        event.preventDefault();
+        const stopWords = new Set(["a", "an", "and", "are", "as", "at", "be", "by", "for", "from", "how", "i", "in", "is", "it", "of", "on", "or", "that", "the", "this", "to", "was", "what", "were", "which", "who", "why", "with"]);
+        const terms = (field.value.toLowerCase().match(/[a-z0-9]+/g) || [])
+          .filter((term) => !stopWords.has(term))
+          .map((term) => term.length > 4 && term.endsWith("s") ? term.slice(0, -1) : term);
+        if (!terms.length) {
+          answer.innerHTML = '<p class="answer-note">Enter a question to search the report.</p>';
+          return;
+        }
+
+        const results = report.pages.map((page) => {
+          const text = page.text.replace(/\s+/g, " ").trim();
+          const searchable = text.toLowerCase();
+          const score = terms.reduce((total, term) => {
+            const matches = searchable.match(new RegExp("\\b" + term + "\\b", "g"));
+            return total + (matches ? matches.length : 0);
+          }, 0);
+          return { page: page.page, text, score };
+        }).filter((result) => result.score > 0).sort((a, b) => b.score - a.score).slice(0, 2);
+
+        if (!results.length) {
+          answer.innerHTML = '<p class="answer-note">No matching passages found. Try terms like revenue, cybersecurity, assets, or cash flow.</p>';
+          return;
+        }
+
+        answer.innerHTML = `<p class="answer-note">Most relevant report passages · Ranked by keyword match</p>` + results.map((result, index) => {
+          const preview = result.text.length > 420 ? `${result.text.slice(0, 420).trim()}…` : result.text;
+          return `<article class="result"><div class="citation">[${index + 1}] ${report.company} · page ${result.page}</div><p class="excerpt">${preview}</p></article>`;
+        }).join("");
+      });
+    }
+
+    async function init() {
+      try {
+        const response = await fetch(new URL("../sample_data/sample_annual_report.json", location.href));
+        if (!response.ok) throw new Error(`Sample data request failed (${response.status})`);
+        const report = await response.json();
+        if (!report.company || !Array.isArray(report.pages) || !report.pages.length) {
+          throw new Error("The sample report data is incomplete.");
+        }
+        document.querySelector("#company-name").textContent = report.company;
+        document.querySelector("#period").textContent = report.report_period;
+        renderMetrics(report);
+        document.querySelector("#summary").textContent = [
+          report.pages[0].text,
+          report.pages[1].text,
+        ].join(" ");
+        renderSearch(report);
+      } catch (error) {
+        document.querySelector("#company-name").textContent = "Sample report unavailable";
+        document.querySelector("#period").textContent = error.message;
+        document.querySelector("#metrics").innerHTML = '<p class="empty">Could not load the sample data. Please reload the page.</p>';
+        document.querySelector("#summary").textContent = "The sample report could not be loaded.";
+      }
+    }
+
+    init();
+  </script>
+</body>
+</html>
