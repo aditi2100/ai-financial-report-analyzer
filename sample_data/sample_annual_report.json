@@ -1,0 +1,19 @@
+{
+  "company": "Northstar Cloud Systems (fictional)",
+  "report_period": "Fiscal year 2025",
+  "filename": "northstar_cloud_annual_report_2025.pdf (sample data)",
+  "pages": [
+    {
+      "page": 1,
+      "text": "Northstar Cloud Systems — Annual Report 2025. All companies, results, and events in this sample are fictional. Financial amounts are reported in USD millions unless otherwise noted. Revenue increased to $12,450 million in fiscal 2025 from $10,980 million in 2024, driven by cloud infrastructure and subscription services. Net income rose to $2,130 million from $1,740 million. Operating income was $2,980 million. Management attributes growth to higher enterprise demand and continued adoption of its analytics platform. The company plans to invest in product reliability, artificial intelligence research, and international expansion during 2026."
+    },
+    {
+      "page": 2,
+      "text": "Risk Factors. Northstar faces intense competition from global cloud providers and may experience pricing pressure as customers optimize technology spending. Cybersecurity incidents, service outages, or unauthorized access to customer data could harm customer trust and result in legal costs. The company depends on a limited number of data-center hardware suppliers, so supply-chain disruptions could delay capacity expansion. Foreign-exchange volatility, new data privacy rules, and changes in energy prices may increase costs or affect operating results. Hiring and retaining specialized engineering talent remains important to planned product development."
+    },
+    {
+      "page": 3,
+      "text": "Balance Sheet and Cash Flow. Total assets were $25,600 million as of December 31, 2025, compared with $22,900 million at the end of 2024. Cash flow from operations was $3,420 million. Capital expenditures were $1,180 million, primarily for data-center capacity. The company repurchased shares worth $600 million and repaid $300 million of long-term debt. Cash and cash equivalents totaled $4,750 million at year-end. These results and outlook are fictional and are provided only to demonstrate the analyzer."
+    }
+  ]
+}

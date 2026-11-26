@@ -1,35 +1,19 @@
-# AI Financial Report Analyzer
+# Ledger — Financial Report Analyzer
 
-A GenAI-style financial document intelligence app that analyzes uploaded PDF reports (e.g., 10-K / annual reports) and provides:
+A Streamlit app for exploring annual reports and 10-Ks. It provides:
 
-- Executive summary (extractive)
-- Key metric extraction (revenue, net income, assets, etc.)
-- Retrieval-based Q&A with citation-style context
+- An extractive executive summary
+- Pattern-based extraction of common financial metrics
+- TF-IDF search with cited passages by document and page
+- A built-in fictional sample report that loads on the first visit
 
----
+The sample company, values, and events are entirely fictional. The app does not call an external AI service; answers are retrieved report passages, not generated financial advice.
 
-## Why this project matters
+## Deploy
 
-This project demonstrates practical AI/ML + data engineering patterns used in document intelligence systems:
+[![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy?repo=https://github.com/aditi2100/ai-financial-report-analyzer)
 
-- Document ingestion from PDFs
-- Text chunking and indexing
-- Semantic retrieval (RAG-like workflow)
-- Context-grounded Q&A
-- Metric extraction from unstructured reports
-- Interactive app deployment with Streamlit
-
----
-
-## Tech stack
-
-- Python
-- Streamlit
-- PyPDF
-- scikit-learn (TF-IDF + cosine similarity)
-- Pandas / NumPy
-
----
+The Render Blueprint uses the free web-service plan. Create the service from the button above; Render builds the app and provides its public URL. Free services may spin down after inactivity.
 
 ## Run locally
 
@@ -44,24 +28,13 @@ pip install -r requirements.txt
 streamlit run app.py
 ```
 
----
+The sample dataset loads by default. Switch to **Upload PDF reports** to analyze your own files. You can also download the sample JSON directly from the app.
 
 ## How it works
 
-1. Upload one or more financial PDF reports.
-2. App extracts text by page.
-3. Text is chunked for retrieval.
-4. A TF-IDF retriever finds top relevant chunks for each user question.
-5. App displays citation-style sources (document + page).
-6. Metrics are extracted via pattern-based parsing.
+1. Select the included sample report or upload one or more text-based PDFs.
+2. The app extracts text page by page and creates retrieval chunks.
+3. TF-IDF ranks report passages against your question and displays page citations.
+4. Pattern-based parsing extracts common financial metrics.
 
----
-
-## Suggested production upgrades
-
-- Replace TF-IDF with embedding model + vector DB (FAISS / Pinecone / Weaviate)
-- Add OpenAI/LangChain answer synthesis over retrieved chunks
-- Add table extraction for more accurate numeric KPI capture
-- Add multi-document comparison and trend charts by filing period
-
----
+Scanned PDFs need OCR before analysis. Metric extraction is intentionally lightweight and should be checked against the source report.
